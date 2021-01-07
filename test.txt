@@ -1,1 +1,2 @@
 ceci est un document du colloborateur 1
+Mon object principale est de reunir le max de commit sur le depot local*
