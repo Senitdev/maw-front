@@ -1,0 +1,18 @@
+div.maw-data-table {
+
+  .maw-data-table-tool-bar {
+    button {
+      margin-right: 4px;
+    }
+  }
+
+  th.maw-data-table-actions-column {
+    text-align: center;
+  }
+
+  .maw-actions-cell {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
