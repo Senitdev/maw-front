@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Upload } from 'antd';
 import { NotificationGenerator } from 'features/core/components/NotificationGenerator';
-
+import axios from 'axios';
+import $ from 'jquery';
 import { actionCreators as displayManagementActions } from 'features/displayManagement';
 import { Config } from 'app/config';
 
@@ -31,8 +32,8 @@ export default class FileUpload extends Component {
    * Cette fonction simule un clique sur le bouton caché dans le composant Upload de Ant.
    */
   open() {
-     this.virtualButton.click();
-   
+    // this.virtualButton.click();
+    $("#selectImage").click();
   }
 
   /**
@@ -70,13 +71,33 @@ export default class FileUpload extends Component {
         break;
     }
   }
- 
+	//Chargement et upload d'un ficher
+    upload=event=>{
+
+    console.log("the file "+event.target.files[0]) 
+    var donnee = new FormData();
+    donnee.append('file', event.target.files[0]);
+    var self=this;
+    var url = Config.API + 'entities/1/modules/3/files';
+    const data= axios({method: 'post', url:url, data:donnee,  header: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+              },})
+        .then(function (response) {
+          console.log("the file response : "+response);
+            var rslt =  JSON.stringify(response);
+            self.props.actions.fetchMediaList('file');
+           // self.props.onRefresh();
+            console.log("the file stringify : "+rslt);
+           
+        })
+  }
   render() {
     return (
       <div className="maw-file-upload">
       
         {/* <button id='plus' onClick={this.upload}>+</button> */}
-       
+          <input id='selectImage' style={{display : "none"}}  type="file" onChange={this.upload} />
     
         {/*  <Upload
           name="file"
