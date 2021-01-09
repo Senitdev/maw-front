@@ -34,7 +34,10 @@ export default class DataTable extends Component {
       groupNameInputValue: '',
     };
   }
-
+   closeAlert()
+  {
+    $("#divalert").html("");
+  }
   render() {
 
     const { columns,
@@ -78,7 +81,8 @@ export default class DataTable extends Component {
         { /* Ligne du titre si nécessaire */ title &&
         <TitleBar title={title} />
         }
-
+        
+          <div style={{display: "none"}} id="divalert"></div>
         { 
          (onRefresh || onGroupSelection || onDeleteSelection || onAdd || onSearch || onScheduleSelection || onCalendarSelection) && (
         <Row style={{marginBottom: '4px'}}>
@@ -125,7 +129,7 @@ export default class DataTable extends Component {
           </Col>
         </Row>
         )}  
-
+      
         { /* Ligne avec la table */ }
         <Row>
           <Col>

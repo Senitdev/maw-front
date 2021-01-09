@@ -128,6 +128,7 @@ export default class MediaTable extends Component {
         $('.ads_Checkbox').prop('checked', true);
       }
     });
+   
   }
   selectAll()
   {

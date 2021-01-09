@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import fetch from 'isomorphic-fetch';
 import omit from 'lodash/omit';
 import { State } from 'models/displayManagement';
-
+import $ from 'jquery';
 import { NotificationGenerator } from 'features/core/components/NotificationGenerator';
 import { Config } from 'app/config';
 
@@ -401,7 +401,7 @@ function featPatchOrCreateFromEditor(deletedRelations, patchedOrCreatedRelations
       else if (media.type == 'agenda')
         normalizedRelationsFromEditor = normalizeRelationsFromAgendaEditor(patchedOrCreatedRelations, mediaBis.id);
       else {
-        NotificationGenerator.raise('Erreur', 'Un problème à été rencontré durant la sauvegarde. Vérifiez votre connection internet et réessayer.', 'error');
+        NotificationGenerator.raise('Erreur ! Un problème à été rencontré durant la sauvegarde. Vérifiez votre connection internet et réessayer.', 'error');
         throw 'error in featPatchOrCreateFromEditor(): wrong type of media.';
       }
       //supprime les relations a suprimer.
@@ -419,12 +419,12 @@ function featPatchOrCreateFromEditor(deletedRelations, patchedOrCreatedRelations
       }
 
       Promise.all(allPromise).then(() => {
-        NotificationGenerator.raise('Succès', 'La sauvegarde a été effectuée.', 'success');
+        NotificationGenerator.raise('Succès ! La sauvegarde a été effectuée.', 'success');
         resolve(mediaBis.id);
       });
     })
     .catch(() => {
-      NotificationGenerator.raise('Erreur', 'Un problème à été rencontré durant la sauvegarde. Vérifiez votre connection internet et réessayer.', 'error');
+      NotificationGenerator.raise('Erreur ! Un problème à été rencontré durant la sauvegarde. Vérifiez votre connection internet et réessayer.', 'error');
       reject(error);
     })
   );
@@ -437,14 +437,14 @@ function patchMediaRequest(id) {
   };
 }
 function patchMediaSuccess(media) {
-  NotificationGenerator.raise('média mis à jour', 'Le média \"' + media.name + '\" à été édité.', 'success');
+  NotificationGenerator.raise('Le média \"' + media.name + '\" à été édité.', 'success');
   return {
     type: PATCH_MEDIA_SUCCESS,
     payload: { media }
   };
 }
 function patchMediaFailure(id) {
-  NotificationGenerator.raise('Une erreur s\'est produit lors de la mise à jour du média.', 'Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
+  NotificationGenerator.raise('Une erreur s\'est produit lors de la mise à jour du média. Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
   return {
     type: PATCH_MEDIA_FAILURE,
     payload: { id }
@@ -551,7 +551,7 @@ function mediaListSuccess(type, mediaById) {
   };
 }
 function mediaListFailure(type, error) {
-  NotificationGenerator.raise('Une erreur s\'est produit lors de la récupération des données', 'Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
+  NotificationGenerator.raise('Une erreur s\'est produit lors de la récupération des données. Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
   return {
     type: MEDIA_LIST_FAILURE,
     error: true,
@@ -793,13 +793,15 @@ function fetchMediaList(type) {
       .catch((error) => dispatch(mediaListFailure(type, error)));
   };
 }
+ 
 
 function deleteMediaSuccess(id) {
-  NotificationGenerator.raise('Le média à été correctement supprimé.', '', 'success');
-  return {
+  NotificationGenerator.raise('Le média à été correctement supprimé.', 'success');
+ // NotificationGenerator.genereNotification('Le média à été correctement supprimé.', 'success');
+   return {
     type: DELETE_MEDIA_SUCCESS,
     payload: { id }
-  };
+  }; 
 }
 
 function deleteMediaRequest(id) {
@@ -810,7 +812,7 @@ function deleteMediaRequest(id) {
 }
 
 function deleteMediaFailure(id/*, error*/) {
-  NotificationGenerator.raise('Une erreur s\'est produit lors de la suppression.', 'Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
+  NotificationGenerator.raise('Une erreur s\'est produit lors de la suppression. Veuillez vérifier votre connection internet, recharger la page et réessayer', 'error');
   return (dispatch) => {
     dispatch({
       type: DELETE_MEDIA_FAILURE,

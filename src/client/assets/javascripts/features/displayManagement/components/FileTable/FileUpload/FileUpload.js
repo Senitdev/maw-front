@@ -52,7 +52,7 @@ export default class FileUpload extends Component {
 
       case 'done':
         // Notifie du succès
-        NotificationGenerator.raise(`"${info.file.name}" ajouté.`, null, 'success');
+        NotificationGenerator.raise(`"${info.file.name}" ajouté.`, 'success');
         // Ajoute le fichier dans le store
         this.props.actions.addFile(info.file.response.data);
         // Retire le fichier de la liste
@@ -63,7 +63,7 @@ export default class FileUpload extends Component {
 
       case 'error':
         // Notifie de l'erreur
-        NotificationGenerator.raise(`"${info.file.name}" n'a pas pu être envoyé.`, null, 'error');
+        NotificationGenerator.raise(`"${info.file.name}" n'a pas pu être envoyé.`,  'error');
         // Retire le fichier de la liste
         this.setState({
           fileList: fileList.filter((file) => file != info.file)
@@ -74,7 +74,7 @@ export default class FileUpload extends Component {
 	//Chargement et upload d'un ficher
     upload=event=>{
 
-    console.log("the file "+event.target.files[0]) 
+    console.log("the file "+event.target.files[0].name) 
     var donnee = new FormData();
     donnee.append('file', event.target.files[0]);
     var self=this;
@@ -86,6 +86,7 @@ export default class FileUpload extends Component {
         .then(function (response) {
           console.log("the file response : "+response);
             var rslt =  JSON.stringify(response);
+            NotificationGenerator.raise('Fichier ajouté avec succès.',  'success');
             self.props.actions.fetchMediaList('file');
            // self.props.onRefresh();
             console.log("the file stringify : "+rslt);
@@ -95,7 +96,7 @@ export default class FileUpload extends Component {
   render() {
     return (
       <div className="maw-file-upload">
-      
+        
         {/* <button id='plus' onClick={this.upload}>+</button> */}
           <input id='selectImage' style={{display : "none"}}  type="file" onChange={this.upload} />
     
