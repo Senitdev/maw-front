@@ -3,7 +3,7 @@ import AppHeader from 'features/core/components/AppHeader';
 import Helmet from "react-helmet";
 
 import './App.scss';
-import logo from 'images/LogoMAW.png';
+import logo from 'images/favSignange.png';
 import 'styles/timePicker.scss';
 
 const App = (props) => (
