@@ -126,7 +126,12 @@ export default class FileTable extends Component {
         
         <TitleBar title="Fichiers" />
         <FileUpload ref={(ref) => this.fileUpload = ref ? ref.getWrappedInstance() : null} onRefresh={this.props.onRefresh} />
-        <MediaTable columns={columns} onAdd={this.openFileUpload} onPreview={this.openPreview} {...this.props} />
+        <MediaTable
+          columns={columns} 
+          onAdd={this.openFileUpload} 
+          onPreview={this.openPreview} 
+          {...this.props} 
+         />
       
        {/*  <Modal
           visible={previewIsVisible}

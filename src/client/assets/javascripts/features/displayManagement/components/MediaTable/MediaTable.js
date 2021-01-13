@@ -9,6 +9,7 @@ export default class MediaTable extends Component {
     dataSource: PropTypes.arrayOf(PropTypes.object).isRequired,
     onNameEdit: PropTypes.func,
     onSearch: PropTypes.func,
+    displayManagement: PropTypes.object,
   };
 
   /**
@@ -111,6 +112,7 @@ export default class MediaTable extends Component {
 
     this.state = {
       searchText: '',
+      filterTable: null,
       searchableFields: MediaTable.getSearchableFields(props.columns)
     };
     this.selectAll = this.selectAll.bind(this);
@@ -144,9 +146,38 @@ export default class MediaTable extends Component {
       });
     }
   }
+   /**
+   * Extrait et normalise les données du store.
+   * Retourne un tableau de média, chacun ayant une valeur suplémentaire "isDeleting".
+   */
+  extractData() {
+    const { mediaById, [this.props.mediaType]: { items }, isDeleting } = this.props.displayManagement;
 
+    return items.map(function(id) {
+      return {
+        ...mediaById[id],
+        isDeleting: isDeleting[id]
+      };
+    });
+  }
+ /**
+   * Récupère les données du store devant être affichée. Cette méthode fait appel à `extractData` et `searchData`.
+   */
+  getShownData() {
+    return this.searchData(this.extractData());
+  }
   onSearch = (text) => {
     this.setState({ searchText: text });
+    const filterTable = this.props.dataSource.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(text.toLowerCase())
+      )
+    );
+
+    this.setState({ filterTable });
+    //this.getShownData();
   }
 
   /**
@@ -159,7 +190,7 @@ export default class MediaTable extends Component {
     }
 
     const reg = new RegExp(this.state.searchText.replace(/ /g, '|'), 'gi');
-
+    
     return data.map((media) => {
       let match = false;
       for (let field of this.state.searchableFields) {
@@ -175,20 +206,21 @@ export default class MediaTable extends Component {
   render() {
 
     const { dataSource, onSearch, ...otherProps } = this.props;
-
+    //const data = this.getShownData();
+   // const loading = this.props.displayManagement[this.props.mediaType].isFetching;
     return (
       <DataTable
         {...otherProps}
         
         columns={this.props.columns}
-        dataSource={this.props.dataSource}
+        dataSource={this.state.filterTable == null ? dataSource : this.state.filterTable}
         loading={this.props.loading}
         onAdd={this.props.onAdd}
         onDelete={this.props.onDelete}
         onDeleteSelection={this.props.onDeleteSelection}
         onEdit={this.props.onEdit}
         onRefresh={this.props.onRefresh}
-        onSearch={this.props.onSearch}
+        onSearch={this.onSearch}
         rowSelection={this.props.rowSelection}
 
         />

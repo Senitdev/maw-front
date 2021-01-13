@@ -93,6 +93,7 @@ export default class FileTableContainer extends Component {
         onDeleteSelection={this.onDeleteSelection}
         onNameEdit={this.onNameEdit}
         onRefresh={this.onRefresh}
+        onSearch={this.onSearch}
         rowSelection={rowSelection}
          />
     );
