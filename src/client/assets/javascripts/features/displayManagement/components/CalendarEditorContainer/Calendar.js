@@ -10,6 +10,8 @@ import 'fullcalendar/dist/locale/fr.js';
 import { Icon } from 'antd';
 import moment from 'moment';
 
+import './CalendarContainer.scss';
+
 const format = 'HH:mm';
 
 export default class Calendar extends Component {

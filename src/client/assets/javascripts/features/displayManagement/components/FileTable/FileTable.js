@@ -21,7 +21,7 @@ export default class FileTable extends Component {
       render: (text, file) => `${file.width}x${file.height} (px)`,
     },
     weight: {
-      title: 'Poid',
+      title: 'Poids',
       key: 'weight',
       sorter: (a, b) => b.weight - a.weight,
       render: (text, file) => {

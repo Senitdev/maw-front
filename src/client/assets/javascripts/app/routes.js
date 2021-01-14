@@ -45,7 +45,7 @@ export default function getRoutes(store) {
         <IndexRedirect to="display-management" />
 
         <Route path="display-management" component={DisplayManagementContainer}>
-          <IndexRedirect to="agenda" />
+          <IndexRedirect to="file" />
 
           <Route path="file" component={inTablePage(FileTableContainer)} />
 

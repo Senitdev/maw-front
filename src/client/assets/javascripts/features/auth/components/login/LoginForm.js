@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Alert, Form, Icon, Input, Button, Checkbox } from 'antd';
+import $ from 'jquery';
 const FormItem = Form.Item;
 
 const LoginForm = Form.create({
@@ -46,7 +47,17 @@ class LoginForm extends Component {
       }
     });
   }
+ visiblePassword()
+ {
+  if ($("#password").attr("type") === "password") {
+    $("#password").attr("type","text") ;
 
+    $("#toggle-password").toggleClass("fa-eye-slash fa-eye ");
+  } else {
+    $("#password").attr("type","password") ;
+    $("#toggle-password").toggleClass("fa-eye fa-eye-slash");
+  }
+ }
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -78,10 +89,11 @@ class LoginForm extends Component {
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Veuillez entrer votre mot de passe.' }],
           })(
-            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Mot de passe" />
-          )}
+            <Input addonBefore={<Icon type="lock" />} type="password" addonAfter={<span  onClick={this.visiblePassword} id="toggle-password" toggle="#password-field" className="fa fa-fw fa-eye field-icon toggle-password"></span>} placeholder="Mot de passe" />
+            
+          )} 
         </FormItem>
-
+       
         <FormItem>
           {getFieldDecorator('rememberMe', {
             valuePropName: 'checked',
