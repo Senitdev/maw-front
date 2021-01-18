@@ -15,6 +15,7 @@ export function logException(ex, context) {
 // Objet global de configuration
 // TODO: config différente selon l'environnement (dev/prod)
 export const Config = {
+  //API: 'http://dev.senitdev.com/api',
   API: 'http://app3.myaccessweb.com/api/',
   thumbnailURL: 'modules-static-files/Screens/tenants/'
 };

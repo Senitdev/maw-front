@@ -79,7 +79,7 @@ function loginFailure(error) {
 function login(email, password, rememberMe) {
   return (dispatch) => {
     dispatch(loginRequest());
-
+    localStorage.removeItem('logout');
     return fetch(Config.API + 'feats/login', {
       method: 'POST',
       headers: {
@@ -95,10 +95,12 @@ function login(email, password, rememberMe) {
       if (!response.ok) {
         throw response;
       }
+      
       // Pas nécessaire quand on utilisera le cookie de session //
       localStorage.setItem('userId', 1);
       ////////////////////////////////////////////////////////////
       dispatch(loginSuccess(getUserId(), email, rememberMe));
+      
     })
     .catch((error) => {
       dispatch(loginFailure(error));
@@ -109,6 +111,7 @@ function login(email, password, rememberMe) {
 function logout() {
   return (dispatch) => {
     localStorage.removeItem('userId');
+    localStorage.setItem('logout', 'yes');
     dispatch({
       type: LOGOUT
     });

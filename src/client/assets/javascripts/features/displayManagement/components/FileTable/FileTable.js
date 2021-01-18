@@ -128,6 +128,7 @@ export default class FileTable extends Component {
         <FileUpload ref={(ref) => this.fileUpload = ref ? ref.getWrappedInstance() : null} onRefresh={this.props.onRefresh} />
         <MediaTable
           columns={columns} 
+          dataSource={this.props.dataSource}
           onAdd={this.openFileUpload} 
           onPreview={this.openPreview} 
           {...this.props} 
@@ -143,7 +144,7 @@ export default class FileTable extends Component {
           width={previewWidth}>
           { previewFile && <FileViewer file={previewFile} width="auto" displayControls /> }
         </Modal>  */}
-         <div className="modal modal-view" style={{display:"none"}} id="modalView" tabindex="-1" role="dialog">
+         <div className="modal modal-view" style={{display:"none"}} id="modalView" tabIndex="-1" role="dialog">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -9,7 +9,7 @@ const LoginForm = Form.create({
   onFieldsChange(props, changedFields) {
     props.onChange(changedFields);
   },
-
+  
   mapPropsToFields(props) {
     return {
       email: {
@@ -60,15 +60,21 @@ class LoginForm extends Component {
  }
   render() {
     const { getFieldDecorator } = this.props.form;
-
-    const errorMessages = this.props.errors && this.props.errors.length > 0 && (
+    var errorMessages="";
+    if(localStorage.getItem('logout') && localStorage.getItem('logout')==="yes")
+    {
+      errorMessages="";
+    }
+    else
+    {
+     errorMessages = this.props.errors && this.props.errors.length > 0 && (
       <ul>
         {this.props.errors.map(function(error, index) {
           return <li key={index}>{error}</li>;
         })}
       </ul>
     );
-
+      }
     return (
       <Form onSubmit={this.onSubmit} className="login-form">
         <h1>Connexion</h1>
@@ -89,7 +95,7 @@ class LoginForm extends Component {
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Veuillez entrer votre mot de passe.' }],
           })(
-            <Input addonBefore={<Icon type="lock" />} type="password" addonAfter={<span  onClick={this.visiblePassword} id="toggle-password" toggle="#password-field" className="fa fa-fw fa-eye field-icon toggle-password"></span>} placeholder="Mot de passe" />
+            <Input addonBefore={<Icon type="lock" />} type="password" addonAfter={<span  onClick={this.visiblePassword} id="toggle-password"  className="fa fa-fw fa-eye field-icon toggle-password"></span>} placeholder="Mot de passe" />
             
           )} 
         </FormItem>

@@ -51,7 +51,7 @@ export default class SceneEditorTimeline extends Component {
       });
     }
   }
-
+ onChange = (checked) => this.setState({magnetIsActive: checked})
   getCurrentFormatedTick = () => millisec(this.props.interval).format('hh [h] : mm [m] : ss [s]');
 
   updateCurrentMagnetX = (magnetX) => this.setState({magnetX: magnetX});
@@ -121,7 +121,7 @@ export default class SceneEditorTimeline extends Component {
         <Row>
           <Col span='2'>
             {/* <Tooltip title="Active/désactive le magnetisme lors des déplacements des éléments dans la timeline."> */}
-              <Switch onChange={(checked) => this.setState({magnetIsActive: checked})}
+              <Switch onChange={this.onChange}
                       defaultChecked
                       checkedChildren={<Icon type="lock" />}
                       unCheckedChildren={<Icon type="unlock" />} />

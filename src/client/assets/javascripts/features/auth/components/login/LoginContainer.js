@@ -63,7 +63,7 @@ export default class LoginContainer extends Component {
       this.props.router.push('/');
     }
   }
-
+ 
   /**
    * Met à jour la valeur des champs modifiés dans l'état local.
    */

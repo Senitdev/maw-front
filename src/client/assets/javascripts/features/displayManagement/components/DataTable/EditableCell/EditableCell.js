@@ -47,6 +47,15 @@ export default class EditableCell extends Component {
       ...record,
       [field]: newValue
     };
+   
+    /* const filterTable = this.props.dataSource.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(text.toLowerCase())
+      )
+    );
+    alert(filterTable); */
     this.props.onEdit(newRecord, field, newValue);
     this.setState({ isEditing: false });
   }

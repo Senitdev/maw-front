@@ -31,7 +31,7 @@ export default class MediaTable extends Component {
     // l'on souhaite que le champ soit modifiable.
     name: (onEdit = null) => {
       const render = onEdit ?
-        (text, media) => <EditableCell record={media} field="name" onEdit={onEdit} />
+        (text, media) => <EditableCell record={media}  field="name" onEdit={onEdit} />
         :
         (text, media) => media.name
       ;

@@ -384,11 +384,42 @@ export default class SceneEditorContainer extends Component {
     const computedX = Math.round(x / this.editorDurationWidth * this.state.scaling);
     this.pauseScene(undefined, () =>
       this.setState({
-        interval: computedX,
-        mediaControls: String(computedX),
+        interval: x,
+        mediaControls: String(x),
       }));
   };
+ onChangeScaling=(val) => {
+  this.setState({
+    scaling: val
+  });
+}
+onDragStop=(newX, newY) => {
+  this.setState({
+    mediaInScene: {
+      ...this.state.mediaInScene,
+      [key]: {
+        ...relation,
+        boxTop: newY,
+        boxLeft: newX,
+      }
+    }
+  });
+}
+onResizeStop = (newHeight, newWidth) => {
+  const newBoxHeight = newHeight + relation.boxTop > 100 ? 100 - relation.boxTop : newHeight;
+  const newBoxWidth = newWidth + relation.boxLeft > 100 ? 100 - relation.boxLeft : newWidth;
 
+  this.setState({
+    mediaInScene: {
+      ...this.state.mediaInScene,
+      [key]: {
+        ...relation,
+        boxHeight: newBoxHeight,
+        boxWidth: newBoxWidth,
+      }
+    }
+  });
+}
   render() {
     var screenSparationsDivs = [];
 
@@ -415,33 +446,8 @@ export default class SceneEditorContainer extends Component {
               if (this.state.mediaSelected != key)
                 this.selecteMediaInScene(key);
             }}
-            onResizeStop={(newHeight, newWidth) => {
-              const newBoxHeight = newHeight + relation.boxTop > 100 ? 100 - relation.boxTop : newHeight;
-              const newBoxWidth = newWidth + relation.boxLeft > 100 ? 100 - relation.boxLeft : newWidth;
-
-              this.setState({
-                mediaInScene: {
-                  ...this.state.mediaInScene,
-                  [key]: {
-                    ...relation,
-                    boxHeight: newBoxHeight,
-                    boxWidth: newBoxWidth,
-                  }
-                }
-              });
-            }}
-            onDragStop={(newX, newY) => {
-              this.setState({
-                mediaInScene: {
-                  ...this.state.mediaInScene,
-                  [key]: {
-                    ...relation,
-                    boxTop: newY,
-                    boxLeft: newX,
-                  }
-                }
-              });
-            }}
+            onResizeStop={this.onResizeStop}
+            onDragStop={this.onDragStop}
             media={media}
             mediaControls={!isNaN(this.state.mediaControls) ? String((this.state.mediaControls - relation.startTimeOffset) % media.duration) : this.state.mediaControls}
             offset={relation.startTimeOffset}
@@ -479,11 +485,7 @@ export default class SceneEditorContainer extends Component {
             relations={this.state.mediaInScene}
             medias={this.props.mediaById}
             scaling={this.state.scaling}
-            onChangeScaling={(val) => {
-              this.setState({
-                scaling: val
-              });
-            }}
+            onChangeScaling={this.onChangeScaling}
             editorDurationWidth={this.editorDurationWidth}
             interval={this.state.interval}
             setSceneInterval={this.setSceneInterval}
