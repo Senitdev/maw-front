@@ -1,4 +1,4 @@
-# Nouvelle version de du front de dev.sonitdev
+# Nouvelle version du frontend de dev.senitdev
 
 # React + Redux w/ ES6 Starter Project
 
