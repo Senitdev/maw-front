@@ -1,3 +1,5 @@
+# Nouvelle version du frontend de dev.senitdev
+
 # React + Redux w/ ES6 Starter Project
 
 **:tada: A Completely updated version of my initial boilerplate :rocket:**
