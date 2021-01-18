@@ -1,3 +1,5 @@
+# Nouvelle version de du front de dev.sonitdev
+
 # React + Redux w/ ES6 Starter Project
 
 **:tada: A Completely updated version of my initial boilerplate :rocket:**
