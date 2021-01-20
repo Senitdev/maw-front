@@ -57,7 +57,7 @@ export default class SceneEditorTimeline extends Component {
   updateCurrentMagnetX = (magnetX) => this.setState({magnetX: magnetX});
 
   seekCursor = (e) => this.props.setSceneInterval(e.pageX - document.getElementById('mark-duration').getBoundingClientRect().left);
-
+ onDrag = (offsetX) => this.props.setSceneInterval(offsetX);
   markMouseDown = false;
 
   render() {
@@ -165,8 +165,9 @@ export default class SceneEditorTimeline extends Component {
             editorDurationWidth={editorDurationWidth}
             height={20 + 50 * (maxZindex)}
             x={Math.round((timeInterval) / scaling * editorDurationWidth)}
-            onDrag={(offsetX) => this.props.setSceneInterval(offsetX)} />
-
+            onDrag={this.onDrag}
+            pauseScene = {this.props.pauseScene} />
+           
         </Row>
         <Row className='timeline' style={{height: 50*(maxZindex) + 'px', backgroundSize: editorDurationWidth + 'px 50px'}}>
           {items}

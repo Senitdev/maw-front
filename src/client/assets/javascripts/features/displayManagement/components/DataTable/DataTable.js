@@ -77,7 +77,7 @@ export default class DataTable extends Component {
 
     return (
       <div className="maw-data-table">
-
+        <input type="hidden" id="tableData" value={JSON.stringify(this.props.dataSource)} />
         { /* Ligne du titre si nécessaire */ title &&
         <TitleBar title={title} />
         }

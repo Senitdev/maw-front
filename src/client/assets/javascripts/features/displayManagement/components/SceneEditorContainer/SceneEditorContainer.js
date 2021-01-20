@@ -381,12 +381,16 @@ export default class SceneEditorContainer extends Component {
   }
 
   setSceneInterval = (x) => {
-    const computedX = Math.round(x / this.editorDurationWidth * this.state.scaling);
-    this.pauseScene(undefined, () =>
+    console.log("x = "+x+" editor duration = "+this.editorDurationWidth+" scaling = "+this.state.scaling);
+    const computedX = Math.round(x /this.editorDurationWidth * this.state.scaling);
+    clearInterval(this.timer);
+    //this.playScene();
+   //   this.pauseScene(undefined, () =>
       this.setState({
-        interval: x,
-        mediaControls: String(x),
-      }));
+        interval: computedX,
+        mediaControls: 'pause',
+      });
+      //)  
   };
  onChangeScaling=(val) => {
   this.setState({
@@ -419,6 +423,11 @@ onResizeStop = (newHeight, newWidth) => {
       }
     }
   });
+}
+onClickTimeline = (idRelation) => {
+  if (this.state.mediaSelected != idRelation) {
+    this.selecteMediaInScene(idRelation);
+  }
 }
   render() {
     var screenSparationsDivs = [];
@@ -493,11 +502,7 @@ onResizeStop = (newHeight, newWidth) => {
             pauseScene={this.pauseScene}
             rewindScene={this.rewindScene}
             changeScaling={this.changeScaling}
-            onClick={(idRelation) => {
-              if (this.state.mediaSelected != idRelation) {
-                this.selecteMediaInScene(idRelation);
-              }
-            }}
+            onClick={this.onClickTimeline}
             updateRelation={this.updateRelation}
             highlightSelected={this.state.mediaSelected}
           /> 

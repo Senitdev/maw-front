@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Icon, Input, Tooltip } from 'antd';
-
+import $ from 'jquery';
+import { NotificationGenerator } from 'features/core/components/NotificationGenerator';
 import './EditableCell.scss';
 
 export default class EditableCell extends Component {
@@ -47,17 +48,34 @@ export default class EditableCell extends Component {
       ...record,
       [field]: newValue
     };
-   
-    /* const filterTable = this.props.dataSource.filter(o =>
+    /* var obj = JSON.parse($("#tableData").val());
+    const filterTable = obj.filter(o =>
       Object.keys(o).some(k =>
         String(o[k])
           .toLowerCase()
-          .includes(text.toLowerCase())
+          .includes(newValue.toLowerCase())
       )
     );
-    alert(filterTable); */
-    this.props.onEdit(newRecord, field, newValue);
-    this.setState({ isEditing: false });
+    alert(JSON.parse(filterTable).length());  */
+    var searchField = "name";
+    var obj = JSON.parse($("#tableData").val());
+    var cpt=0;
+    for (var i=0 ; i < obj.length ; i++)
+    {
+        if (obj[i][searchField] == this.state.newValue) {
+            cpt++;
+        }
+    } 
+    if(cpt>=1)
+    {
+      NotificationGenerator.raise('Ce nom existe déjà, veuillez écrire un nouveau nom.',  'error');
+    }
+    else
+    {
+      this.props.onEdit(newRecord, field, newValue);
+      this.setState({ isEditing: false });
+    }
+   
   }
 
   /**

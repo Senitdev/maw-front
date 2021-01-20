@@ -24,7 +24,8 @@ constructor() {
       x: nextProps.x,
     });
   }
-
+  onDragOn = (event, ui) => this.props.onDrag(ui.position.left);
+  onDragStop = () => this.rnd.updateZIndex(130);
   rnd;
 
   render() {
@@ -51,15 +52,16 @@ constructor() {
           bottomLeft: false,
           topLeft: false
         }}
-        onDragStop={(e, d) => {
+       /*  onDragStop={(e, d) => {
           this.setState({ xt: d.x, y: d.y });
-        }}
-        position={{ x: this.state.xt, y: this.state.y }}
+        }} */
+       // position={{ x: this.state.xt, y: this.state.y }}
         bounds={'parent'}
         moveAxis="x"
-        onDrag={(event, ui) => this.props.onDrag(ui.position.left)}
-       // onDragStop={() => this.rnd.updateZIndex(130)}
+        onDrag={this.onDragOn}
+        onDragStop={this.onDragStop}
       />
+      
     );
   }
 }
